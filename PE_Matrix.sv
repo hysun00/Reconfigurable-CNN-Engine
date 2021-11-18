@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
-// Engineer: 
+// Engineer: Haoyuan Sun
 // 
 // Create Date: 18.11.2021 03:42:53
 // Design Name: 
@@ -25,17 +25,26 @@ module PE_Matrix #(parameter DataWidth=8)
   input  CLK,
   input  RST,
   input  RST_W,
+  //Streaming mode selection
   input [1:0] sel,
+  //Input feature bus
   input  [DataWidth-1:0]   Bus_IF [10:0][10:0],
+  //Weight bus
   input  [DataWidth-1:0]   Bus_W  [10:0][10:0],
+  //Product bus
   output [2*DataWidth-1:0] Bus_P  [10:0][10:0]
 );
 
+//Internal Signals
 wire [DataWidth-1:0]   m_in_3 [10:0][10:0];
 wire [DataWidth-1:0]   m_in_2 [10:0][10:0];
 wire [DataWidth-1:0]   m_in_1 [10:0][10:0];
 wire [DataWidth-1:0]   Bus_Q  [10:0][10:0];
 
+/**
+   11*11 PE matrix grouped as 11 columns of PE array,
+   from column 0 (i.e. PE_Array_0) to column 11 (i.e. PE_Array_10)
+**/
 PE_Array #(DataWidth) PE_Array_0
 (
   .CLK(CLK),.RST(RST),.RST_W(RST_W),.sel(sel),
@@ -168,14 +177,23 @@ PE_Array #(DataWidth) PE_Array_10
   .Bus_Q(Bus_Q[10])
 );
 
+/**
+   Unidirectional anti-diagonal connections for PEs above the anti-diagonal of the square PE matrix(11*11),
+   Unidirectional anti-diagonal connections for PEs at the anti-diagonal of the square PE matrix(11*11),
+   m_in_1 for the lower left pixel streaming in.
+**/
 genvar i,j;
 for (j=1; j<=10; j++) begin
     for (i=0; i<=j-1; i++) begin
          assign m_in_1[0+i+1][j-i-1] = Bus_Q[0+i][j-i];
-         assign m_in_2[0+i][j-i]     = Bus_Q[0+i+1][j-i-1];
     end
 end
 
+/**
+   Bi-directional anti-diagonal connections for PEs below the anti-diagonal of the square PE matrix(11*11),
+   m_in_1 for the lower left pixel streaming in,
+   m_in_1 for the upper right pixel streaming in.
+**/
 genvar m,n;
 for (m=1; m<=9; m++) begin
     for (n=0; n<=9-m; n++) begin

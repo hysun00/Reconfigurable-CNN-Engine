@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
-// Engineer: 
+// Engineer: Haoyuan Sun
 // 
 // Create Date: 18.11.2021 03:40:59
 // Design Name: 
@@ -33,11 +33,16 @@ module PE_Array #(parameter DataWidth=8)
   input  [DataWidth-1:0]   Bus_IF [10:0],
   //Weight
   input  [DataWidth-1:0]   Bus_W  [10:0],
+  //Product of the weight and the feature pixel
   output [2*DataWidth-1:0] Bus_P  [10:0],
+  //I.F. DFF output
   output reg [DataWidth-1:0]   Bus_Q  [10:0]
 );
 
-
+/**
+   A PE array is composed of 11 PEs,
+   from PE_0 to PE_10.
+**/
 PE #(DataWidth)PE_0
 (
  .CLK(CLK),.RST(RST),.RST_W(RST_W),.sel(sel),

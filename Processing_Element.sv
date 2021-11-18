@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
-// Engineer: 
+// Engineer: Haoyuan Sun
 // 
 // Create Date: 17.11.2021 20:53:38
 // Design Name: 
@@ -31,16 +31,19 @@ module PE #(parameter DataWidth=8)
  input  [DataWidth-1:0] m_in_2,
  input  [DataWidth-1:0] m_in_1,
  input  [DataWidth-1:0] m_in_0,
- //
+ //Weight
  input  [DataWidth-1:0] weight, 
- output reg [DataWidth-1:0] Q,
- output [2*DataWidth-1:0] P
+ //Product of the weight and the feature pixel
+ output [2*DataWidth-1:0] P, 
+ //I.F. DFF output
+ output reg [DataWidth-1:0] Q
 );
 
+//Internal signals
 wire [DataWidth-1:0] D;
 reg [DataWidth-1:0] Q_W;
 
-//4 to 1 multiplexer for data streaming
+//4 to 1 multiplexer for different modes of feature pixel streaming
 Mux_4 #(DataWidth) Mux_4_PE 
 (
  .sel(sel),
@@ -51,13 +54,13 @@ Mux_4 #(DataWidth) Mux_4_PE
  .m_out(D)
 );
 
-//Inuput feature buffer
+//Inuput feature pixel buffer
 DFF #(DataWidth) DFF_PE
 (
   .CLK(CLK),
   .RST(RST),
   .D(D),
-  .Q(Q)//Input feature
+  .Q(Q)//Buffered feature pixel
 );
 
 //Weight buffer
@@ -66,7 +69,7 @@ DFF #(DataWidth) DFF_W_PE
   .CLK(CLK),
   .RST(RST_W),
   .D(weight),
-  .Q(Q_W)//Weight
+  .Q(Q_W)//Buffered weight
 );
 
 //Multiplier
