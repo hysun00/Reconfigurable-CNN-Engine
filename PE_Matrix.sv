@@ -20,13 +20,13 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module PE_Matrix #(parameter DataWidth=8)
+module PE_Matrix #(parameter DataWidth=16)
 (
   input  CLK,
   input  RST,
   input  RST_W,
   //Streaming mode selection
-  input [1:0] sel,
+  input [1:0] sel [10:0],
   //Input feature bus
   input  [DataWidth-1:0]   Bus_IF [10:0][10:0],
   //Weight bus
@@ -47,7 +47,8 @@ wire [DataWidth-1:0]   Bus_Q  [10:0][10:0];
 **/
 PE_Array #(DataWidth) PE_Array_0
 (
-  .CLK(CLK),.RST(RST),.RST_W(RST_W),.sel(sel),
+  .CLK(CLK),.RST(RST),.RST_W(RST_W),
+  .sel(sel[0]),
   .m_in_3(m_in_3[0]),
   .m_in_2(m_in_2[0]),
   .m_in_1(m_in_1[0]),
@@ -59,7 +60,8 @@ PE_Array #(DataWidth) PE_Array_0
 
 PE_Array #(DataWidth) PE_Array_1
 (
-  .CLK(CLK),.RST(RST),.RST_W(RST_W),.sel(sel),
+  .CLK(CLK),.RST(RST),.RST_W(RST_W),
+  .sel(sel[1]),
   .m_in_3(m_in_3[1]),
   .m_in_2(m_in_2[1]),
   .m_in_1(m_in_1[1]),
@@ -71,7 +73,8 @@ PE_Array #(DataWidth) PE_Array_1
 
 PE_Array #(DataWidth) PE_Array_2
 (
-  .CLK(CLK),.RST(RST),.RST_W(RST_W),.sel(sel),
+  .CLK(CLK),.RST(RST),.RST_W(RST_W),
+  .sel(sel[2]),
   .m_in_3(m_in_3[2]),
   .m_in_2(m_in_2[2]),
   .m_in_1(m_in_1[2]),
@@ -83,7 +86,8 @@ PE_Array #(DataWidth) PE_Array_2
 
 PE_Array #(DataWidth) PE_Array_3
 (
-  .CLK(CLK),.RST(RST),.RST_W(RST_W),.sel(sel),
+  .CLK(CLK),.RST(RST),.RST_W(RST_W),
+  .sel(sel[3]),
   .m_in_3(m_in_3[3]),
   .m_in_2(m_in_2[3]),
   .m_in_1(m_in_1[3]),
@@ -95,7 +99,8 @@ PE_Array #(DataWidth) PE_Array_3
 
 PE_Array #(DataWidth) PE_Array_4
 (
-  .CLK(CLK),.RST(RST),.RST_W(RST_W),.sel(sel),
+  .CLK(CLK),.RST(RST),.RST_W(RST_W),
+  .sel(sel[4]),
   .m_in_3(m_in_3[4]),
   .m_in_2(m_in_2[4]),
   .m_in_1(m_in_1[4]),
@@ -107,7 +112,8 @@ PE_Array #(DataWidth) PE_Array_4
 
 PE_Array #(DataWidth) PE_Array_5
 (
-  .CLK(CLK),.RST(RST),.RST_W(RST_W),.sel(sel),
+  .CLK(CLK),.RST(RST),.RST_W(RST_W),
+  .sel(sel[5]),
   .m_in_3(m_in_3[5]),
   .m_in_2(m_in_2[5]),
   .m_in_1(m_in_1[5]),
@@ -119,7 +125,8 @@ PE_Array #(DataWidth) PE_Array_5
 
 PE_Array #(DataWidth) PE_Array_6
 (
-  .CLK(CLK),.RST(RST),.RST_W(RST_W),.sel(sel),
+  .CLK(CLK),.RST(RST),.RST_W(RST_W),
+  .sel(sel[6]),
   .m_in_3(m_in_3[6]),
   .m_in_2(m_in_2[6]),
   .m_in_1(m_in_1[6]),
@@ -131,7 +138,8 @@ PE_Array #(DataWidth) PE_Array_6
 
 PE_Array #(DataWidth) PE_Array_7
 (
-  .CLK(CLK),.RST(RST),.RST_W(RST_W),.sel(sel),
+  .CLK(CLK),.RST(RST),.RST_W(RST_W),
+  .sel(sel[7]),
   .m_in_3(m_in_3[7]),
   .m_in_2(m_in_2[7]),
   .m_in_1(m_in_1[7]),
@@ -143,7 +151,8 @@ PE_Array #(DataWidth) PE_Array_7
 
 PE_Array #(DataWidth) PE_Array_8
 (
-  .CLK(CLK),.RST(RST),.RST_W(RST_W),.sel(sel),
+  .CLK(CLK),.RST(RST),.RST_W(RST_W),
+  .sel(sel[8]),
   .m_in_3(m_in_3[8]),
   .m_in_2(m_in_2[8]),
   .m_in_1(m_in_1[8]),
@@ -155,7 +164,8 @@ PE_Array #(DataWidth) PE_Array_8
 
 PE_Array #(DataWidth) PE_Array_9
 (
-  .CLK(CLK),.RST(RST),.RST_W(RST_W),.sel(sel),
+  .CLK(CLK),.RST(RST),.RST_W(RST_W),
+  .sel(sel[9]),
   .m_in_3(m_in_3[9]),
   .m_in_2(m_in_2[9]),
   .m_in_1(m_in_1[9]),
@@ -167,7 +177,8 @@ PE_Array #(DataWidth) PE_Array_9
 
 PE_Array #(DataWidth) PE_Array_10
 (
-  .CLK(CLK),.RST(RST),.RST_W(RST_W),.sel(sel),
+  .CLK(CLK),.RST(RST),.RST_W(RST_W),
+  .sel(sel[10]),
   .m_in_3(m_in_3[10]),
   .m_in_2(m_in_2[10]),
   .m_in_1(m_in_1[10]),
